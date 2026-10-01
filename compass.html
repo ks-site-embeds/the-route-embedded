@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kamben Signal — How we guide you</title>
+<style>html,body{margin:0;padding:0;background:#000;overflow:hidden}</style>
+<script src="./kamben-compass.js"></script>
+</head>
+<body>
+<kamben-compass id="el"></kamben-compass>
+<script>
+(function () {
+  var l = new URLSearchParams(location.search).get('lang');
+  if (l) { document.documentElement.lang = l; document.getElementById('el').setAttribute('lang', l); }
+})();
+</script>
+</body>
+</html>

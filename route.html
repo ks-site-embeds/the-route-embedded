@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kamben Signal — Our method</title>
+<style>html,body{margin:0;padding:0;background:transparent;overflow:hidden}</style>
+<script src="./kamben-route.js"></script>
+</head>
+<body>
+<kamben-route id="el"></kamben-route>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search), l = q.get('lang'), c = q.get('color');
+  var el = document.getElementById('el');
+  if (l) { document.documentElement.lang = l; el.setAttribute('lang', l); }
+  if (c) el.setAttribute('color', '#' + c.replace('#', ''));
+})();
+</script>
+</body>
+</html>
