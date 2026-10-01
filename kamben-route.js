@@ -26,7 +26,7 @@
     '.kr-rock{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible}',
     '.kr-stats{position:absolute;left:0;top:428px;width:760px;display:flex;justify-content:space-between;align-items:flex-start}',
     '.kr-stat{display:grid;grid-template-rows:64px auto;align-items:start}',
-    '.kr-label{margin:0;max-width:200px;font:700 14px/18px ' + F + ';letter-spacing:2.1px;text-transform:uppercase}',
+    '.kr-label{margin:0;font:700 14px/18px ' + F + ';letter-spacing:2.1px;text-transform:uppercase;white-space:nowrap}',
     '.kr-num{margin:0;font:400 80px/80px ' + F + ';font-variant-numeric:tabular-nums;white-space:nowrap}',
     '.kr-rows{display:none}',
     '.kr[data-mode=mobile] .kr-stats{display:none}',
