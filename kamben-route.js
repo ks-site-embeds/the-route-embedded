@@ -1,14 +1,14 @@
 /* Kamben Signal — "Our method" route diagram + counting stats as a Wix Custom Element.
  * Install: Velo → Public → custom-elements/kamben-route.js. Element source: Velo file · Tag name: kamben-route
- * Transparent — place it over the photo section. Desktop: 700 px wide (height follows, 470 at 700). Below 560 px wide it switches to the stacked mobile layout.
+ * Transparent — place it over the photo section. Desktop: 760 px wide → 572 tall (scales with width). Below 560 px wide it switches to the stacked mobile layout.
  * Attributes: lang="en"|"no" (default: page <html lang>) · color (default #ffffff) · fonts="google"|"none"
  *             stats='[{"label":"Conversion rate","value":"3.5%"},{"label":"Customer lifetime value","value":"NOK 24 500"},{"label":"New users","value":"24%"}]'  (optional override; numbers count up from 0)
  * Motion: plays once when 30% in view; honours prefers-reduced-motion. */
 (function () {
   if (!window.customElements || customElements.get('kamben-route')) return;
   var DICT = {
-    en: [{ label: 'Conversion rate', value: '3.5%' }, { label: 'Customer lifetime value', value: 'NOK 24 500' }, { label: 'New users', value: '24%' }],
-    no: [{ label: 'Konverteringsrate', value: '3.5%' }, { label: 'Kundens livstidsverdi', value: 'NOK 24 500' }, { label: 'Nye brukere', value: '24%' }]
+    en: [{ label: 'Conversion rate', value: '3.5%' }, { label: 'Customer lifetime value', value: '24 500' }, { label: 'New users', value: '24%' }],
+    no: [{ label: 'Konverteringsrate', value: '3.5%' }, { label: 'Kundens livstidsverdi', value: '24 500' }, { label: 'Nye brukere', value: '24%' }]
   };
   var ROUTE = "M 0 259.5 C 2.59 260.63 7.59 264.83 15.555 266.268 C 23.52 267.70 35.09 267.53 47.813 268.109 C 60.54 268.69 81.08 267.55 91.89 269.76 C 102.70 271.97 105.31 279.27 112.663 281.35 C 120.02 283.43 130.62 286.07 136.033 282.262 C 141.44 278.45 143.73 266.67 145.115 258.506 C 146.50 250.35 143.88 238.21 144.344 233.299 C 144.81 228.39 143.19 231.46 147.894 229.033 C 152.60 226.60 165.61 224.03 172.584 218.716 C 179.56 213.40 185.07 201.60 189.748 197.135 C 194.42 192.67 192.96 193.88 200.645 191.943 C 208.33 190.01 225.43 188.05 235.881 185.532 C 246.33 183.01 254.22 179.30 263.328 176.82 C 272.44 174.34 283.08 171.07 290.552 170.65 C 298.03 170.23 302.39 170.59 308.176 174.278 C 313.96 177.96 317.78 188.42 325.252 192.758 C 332.73 197.10 342.32 198.02 353.018 200.321 C 363.72 202.62 371.64 203.62 389.464 206.581 C 407.29 209.54 440.31 216.67 459.988 218.102 C 479.67 219.54 494.09 219.20 507.542 215.187 C 520.99 211.18 531.18 200.69 540.7 194.042 C 550.22 187.40 551.01 186.17 564.666 175.31 C 578.32 164.45 608.63 140.47 622.65 128.863 C 636.67 117.26 638.89 111.25 648.799 105.679 C 658.71 100.11 674.42 98.18 682.105 95.433 C 689.79 92.69 688.08 89.58 694.9 89.225 C 701.72 88.87 716.48 96.02 723.034 93.288 C 729.59 90.56 727.97 79.84 734.216 72.84 C 740.46 65.84 750.85 58.54 760.502 51.273 C 770.15 44.01 782.57 36.16 792.102 29.248 C 801.63 22.33 809.53 14.65 817.676 9.779 C 825.83 4.90 837.11 1.63 841 0";
   var ROCKS = [{"origin":"50.0% 100.0%","d":"M18.49,83.97l-11.22,20.12L0,123.8h96.39l-2.63-18.2-10.78-23.22-64.5,1.59Z"},{"origin":"51.6% 67.2%","d":"M76.06,68.68l-7.18-13.87-15.09-17.56-30.44,31.16,30.42,14.78,22.29-14.51Z"},{"origin":"54.0% 30.4%","d":"M67.66,14.77l7.01-13.73-.22-1.04-25.42,5.66-19.54,3.21.23,1.11,14.57,12.35,9.51,15.32,13.86-22.88Z"}];
@@ -24,9 +24,10 @@
     '.kr-mark{display:block;overflow:visible}',
     '.kr-route{display:block;overflow:visible}',
     '.kr-rock{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible}',
-    '.kr-stats{position:absolute;left:0;top:382px;width:700px;display:flex;justify-content:space-between;align-items:flex-start}',
-    '.kr-label{margin:0;font:700 14px/14px ' + F + ';letter-spacing:2.1px;text-transform:uppercase;white-space:nowrap}',
-    '.kr-num{margin:5px 0 0;font:400 64px/64px ' + F + ';font-variant-numeric:tabular-nums;white-space:nowrap}',
+    '.kr-stats{position:absolute;left:0;top:428px;width:760px;display:flex;justify-content:space-between;align-items:flex-start}',
+    '.kr-stat{display:grid;grid-template-rows:64px auto;align-items:start}',
+    '.kr-label{margin:0;max-width:200px;font:700 14px/18px ' + F + ';letter-spacing:2.1px;text-transform:uppercase}',
+    '.kr-num{margin:0;font:400 80px/80px ' + F + ';font-variant-numeric:tabular-nums;white-space:nowrap}',
     '.kr-rows{display:none}',
     '.kr[data-mode=mobile] .kr-stats{display:none}',
     '.kr[data-mode=mobile] .kr-rows{display:block;margin-top:12px}',
@@ -101,7 +102,7 @@
       var root = n.root = el('div', 'kr'), stage = n.stage = el('div', 'kr-stage');
       n.mark = svg('svg', { viewBox: '0 0 100 57.76', 'class': 'kr-mark', 'aria-hidden': 'true', fill: color }); n.mark.innerHTML = MARK;
       n.route = svg('svg', { viewBox: '0 0 841 283', 'class': 'kr-route', 'aria-hidden': 'true' });
-      n.path = svg('path', { d: ROUTE, fill: 'none', stroke: color, 'stroke-width': 5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }); n.route.appendChild(n.path);
+      n.path = svg('path', { d: ROUTE, fill: 'none', stroke: color, 'stroke-width': 4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }); n.route.appendChild(n.path);
       n.cairn = el('div', 'kr-cairn'); n.cairn.setAttribute('aria-hidden', 'true');
       n.rocks = ROCKS.map(function (r) { var sv = svg('svg', { viewBox: '0 0 96.39 123.8', 'class': 'kr-rock' }); sv.style.transformOrigin = r.origin; sv.appendChild(svg('path', { d: r.d, fill: color })); n.cairn.appendChild(sv); return sv; });
       stage.appendChild(n.mark); stage.appendChild(n.route); stage.appendChild(n.cairn);
@@ -116,11 +117,10 @@
       var W = this.clientWidth || 700, mobile = W < 560;
       this._mobile = mobile; n.root.setAttribute('data-mode', mobile ? 'mobile' : 'desktop');
       n.items.forEach(function (it) { (mobile ? n.rows : n.statsBox).appendChild(it.wrap); it.wrap.className = mobile ? 'kr-row' : 'kr-stat'; });
-      var DW = mobile ? 350 : 700, DH = mobile ? 184 : 470, k = W / DW;
+      var DW = 760, DH = mobile ? 328 : 572, k = W / DW;
       n.stage.style.width = DW + 'px'; n.stage.style.height = DH + 'px'; n.stage.style.transform = 'scale(' + k + ')';
       n.stage.style.marginBottom = (DH * k - DH) + 'px';
-      if (mobile) { pos(n.mark, 0, 130, 52, 30); pos(n.route, 58, 38, 262, 126); pos(n.cairn, 318, 0, 32, 41.5); }
-      else { pos(n.mark, 0, 183, 88.6, 51.2); pos(n.route, 107, 79, 494.8, 170.6); pos(n.cairn, 616.5, 0, 58.7, 75.4); }
+      pos(n.mark, 0, 253, 114, 66); pos(n.route, 140, 137, 510, 172); pos(n.cairn, 650, 0, 107, 137.4);
       if (this._played) this.showFinal(); else this.prepare();
       var H = n.root.offsetHeight; this.style.height = H + 'px';
       if (H !== this._lastH) { this._lastH = H; this.dispatchEvent(new CustomEvent('kr-height', { detail: { height: H } })); }
@@ -148,12 +148,12 @@
         anim(it.num, RISE, 900, 900 + 150 * i);
         var p = it.num.__parsed; if (!p) return;
         var t0 = performance.now() + 900 + 150 * i, dur = 1400;
-        var tick = function (now) {
-          var q = Math.min(1, Math.max(0, (now - t0) / dur)), e = 1 - Math.pow(1 - q, 3);
+        var tick = function () {
+          var q = Math.min(1, Math.max(0, (performance.now() - t0) / dur)), e = 1 - Math.pow(1 - q, 3);
           it.num.textContent = q >= 1 ? it.num.__final : fmt(p, p.target * e);
-          if (q < 1) requestAnimationFrame(tick);
+          if (q < 1) setTimeout(tick, 30);
         };
-        requestAnimationFrame(tick);
+        tick();
       });
     }
   }
