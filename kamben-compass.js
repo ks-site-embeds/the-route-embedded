@@ -149,10 +149,9 @@
       n.title.style.left = (rx + 103 * s) + 'px'; n.title.style.top = (ry + 141 * s) + 'px'; n.title.style.fontSize = (35 * ts) + 'px'; n.title.style.lineHeight = (40 * ts) + 'px';
       var lefts = [L, x1, x2], widths = [x1 - L, x2 - x1, W - x2], inset = [44, 30, 38], maxB = 321, i;
       for (i = 0; i < 3; i++) {
-        var avail = Math.max(120, widths[i] - inset[i] - 24), f = Math.max(0.8, Math.min(1, avail / 215));
+        var avail = Math.max(120, widths[i] - inset[i] - 24), f = Math.max(0.85, Math.min(1, avail / 200));
         n.cols[i].style.left = (lefts[i] + inset[i]) + 'px'; n.cols[i].style.top = '203px'; n.cols[i].style.width = avail + 'px';
         n.h3s[i].style.fontSize = (24 * f) + 'px'; n.h3s[i].style.lineHeight = (24 * f) + 'px'; n.h3s[i].style.letterSpacing = (-1.6 * f) + 'px';
-        var guard = 0; while (n.h3s[i].offsetHeight > 3 * parseFloat(n.h3s[i].style.lineHeight) + 1 && guard++ < 6) { f *= 0.94; n.h3s[i].style.fontSize = (24 * f) + 'px'; n.h3s[i].style.lineHeight = (24 * f) + 'px'; n.h3s[i].style.letterSpacing = (-1.6 * f) + 'px'; }
       }
       for (i = 0; i < 3; i++) { var b = 321 + n.paras[i].offsetHeight; if (b > maxB) maxB = b; }
       var r1 = Math.max(451, maxB + 25), r2 = r1 + 82, yB = r2 + 54, c3 = W - x2, bx = L + 11;
