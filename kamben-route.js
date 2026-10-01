@@ -120,7 +120,7 @@
       var DW = 760, DH = mobile ? 328 : 572, k = W / DW;
       n.stage.style.width = DW + 'px'; n.stage.style.height = DH + 'px'; n.stage.style.transform = 'scale(' + k + ')';
       n.stage.style.marginBottom = (DH * k - DH) + 'px';
-      pos(n.mark, 0, 266, 96, 55); pos(n.route, 122, 137, 536, 180); pos(n.cairn, 660, 60, 62, 79.6);
+      pos(n.mark, 0, 266, 96, 55); pos(n.route, 122, 150, 536, 180); pos(n.cairn, 672, 48, 62, 79.6);
       if (this._played) this.showFinal(); else this.prepare();
       var H = n.root.offsetHeight; this.style.height = H + 'px';
       if (H !== this._lastH) { this._lastH = H; this.dispatchEvent(new CustomEvent('kr-height', { detail: { height: H } })); }
