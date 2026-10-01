@@ -24,10 +24,12 @@
     '.kr-mark{display:block;overflow:visible}',
     '.kr-route{display:block;overflow:visible}',
     '.kr-rock{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible}',
-    '.kr-stats{position:absolute;left:0;top:428px;width:760px;display:flex;justify-content:space-between;align-items:flex-start}',
-    '.kr-stat{display:grid;grid-template-rows:64px auto;align-items:start}',
+    '.kr-stats{position:absolute;left:0;top:428px;width:760px;display:grid;grid-template-columns:1fr 1.45fr 1fr;align-items:start}',
+    '.kr-stat{display:grid;grid-template-rows:64px auto;align-items:start;justify-items:start}',
     '.kr-label{margin:0;font:700 14px/18px ' + F + ';letter-spacing:2.1px;text-transform:uppercase;white-space:nowrap}',
-    '.kr-num{margin:0;font:400 80px/80px ' + F + ';font-variant-numeric:tabular-nums;white-space:nowrap}',
+    '.kr-num{margin:0;font:400 80px/80px ' + F + ';font-variant-numeric:tabular-nums;white-space:nowrap;display:inline-grid;grid-template-areas:"n"}',
+    '.kr-num>span{grid-area:n;display:block;text-align:left}',
+    '.kr-num>.kr-ghost{visibility:hidden;pointer-events:none}',
     '.kr-rows{display:none}',
     '.kr[data-mode=mobile] .kr-stats{display:none}',
     '.kr[data-mode=mobile] .kr-rows{display:block;margin-top:12px}',
@@ -107,7 +109,7 @@
       n.rocks = ROCKS.map(function (r) { var sv = svg('svg', { viewBox: '0 0 96.39 123.8', 'class': 'kr-rock' }); sv.style.transformOrigin = r.origin; sv.appendChild(svg('path', { d: r.d, fill: color })); n.cairn.appendChild(sv); return sv; });
       stage.appendChild(n.mark); stage.appendChild(n.route); stage.appendChild(n.cairn);
       n.statsBox = el('div', 'kr-stats'); n.rows = el('div', 'kr-rows');
-      n.items = this.stats.map(function (st) { var w = el('div', 'kr-stat'), l = el('p', 'kr-label', esc(st.label)), v = el('p', 'kr-num', esc(st.value)); v.__parsed = parseValue(st.value); v.__final = String(st.value); w.appendChild(l); w.appendChild(v); return { wrap: w, label: l, num: v }; });
+      n.items = this.stats.map(function (st) { var w = el('div', 'kr-stat'), l = el('p', 'kr-label', esc(st.label)), v = el('p', 'kr-num'), g = el('span', 'kr-ghost', esc(st.value)), live = el('span', '', esc(st.value)); g.setAttribute('aria-hidden', 'true'); v.appendChild(g); v.appendChild(live); v.__live = live; v.__parsed = parseValue(st.value); v.__final = String(st.value); w.appendChild(l); w.appendChild(v); return { wrap: w, label: l, num: v }; });
       root.appendChild(stage); root.appendChild(n.rows); this.appendChild(root);
       stage.appendChild(n.statsBox);
       this.layout();
@@ -129,12 +131,12 @@
       var n = this._n, len = 0; try { len = n.path.getTotalLength(); } catch (e) {}
       n.path.style.strokeDasharray = len + 'px'; n.path.style.strokeDashoffset = len + 'px';
       n.mark.style.opacity = '0'; n.rocks.forEach(function (r) { r.style.opacity = '0'; });
-      n.items.forEach(function (it) { it.label.style.opacity = '0'; it.num.style.opacity = '0'; if (it.num.__parsed) it.num.textContent = fmt(it.num.__parsed, 0); });
+      n.items.forEach(function (it) { it.label.style.opacity = '0'; it.num.style.opacity = '0'; if (it.num.__parsed) it.num.__live.textContent = fmt(it.num.__parsed, 0); });
     }
     showFinal() {
       var n = this._n;
       [n.path, n.mark].concat(n.rocks).forEach(function (e) { e.style.opacity = ''; e.style.transform = ''; e.style.strokeDasharray = ''; e.style.strokeDashoffset = ''; });
-      n.items.forEach(function (it) { it.label.style.opacity = it.label.style.transform = ''; it.num.style.opacity = it.num.style.transform = ''; it.num.textContent = it.num.__final; });
+      n.items.forEach(function (it) { it.label.style.opacity = it.label.style.transform = ''; it.num.style.opacity = it.num.style.transform = ''; it.num.__live.textContent = it.num.__final; });
     }
     play() {
       var n = this._n, m = this._mobile, self = this;
@@ -150,7 +152,7 @@
         var t0 = performance.now() + 900 + 150 * i, dur = 1400;
         var tick = function () {
           var q = Math.min(1, Math.max(0, (performance.now() - t0) / dur)), e = 1 - Math.pow(1 - q, 3);
-          it.num.textContent = q >= 1 ? it.num.__final : fmt(p, p.target * e);
+          it.num.__live.textContent = q >= 1 ? it.num.__final : fmt(p, p.target * e);
           if (q < 1) setTimeout(tick, 30);
         };
         tick();
