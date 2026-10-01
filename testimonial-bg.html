@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kamben Signal — Testimonial background</title>
+<style>
+html,body{margin:0;padding:0;background:#CEDDD2;overflow:hidden}
+.tb{position:relative;width:100%;overflow:hidden;background:#CEDDD2}
+.tb svg{position:absolute;display:block}
+.desk{display:block} .mob{display:none}
+@media (max-width:759px){.desk{display:none} .mob{display:block}}
+/* desktop: 1440×735 composition, scaled to the frame width */
+.tb.desk{aspect-ratio:1440/735}
+.wedge{left:0;top:0;width:100%;height:100%}
+.shape{left:14.653%;top:-31.156%;width:110.07%;height:169.93%}
+/* mobile: 390×540 composition */
+.tb.mob{aspect-ratio:390/540}
+.full{left:0;top:0;width:100%;height:100%}
+</style>
+</head>
+<body>
+<div class="tb desk">
+  <svg class="wedge" viewBox="0 0 1440 735" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,0 256,0 119,735 0,735" style="fill:rgb(255,105,50)"></polygon></svg>
+  <svg class="shape" viewBox="0 0 1585 1249" preserveAspectRatio="none" aria-hidden="true"><path d="M 0 477.595 L 302.004 304.166 L 662.063 14.231 L 679.74 0 L 709.778 17.991 L 929.06 285.77 L 1079.427 553.896 L 1316.154 919.208 L 1459.358 1062.613 L 1585 1249 L 586.215 1249 L 239.674 832.956 L 134.25 654.321 L 0 477.595 Z" style="fill:#FEFBF4"></path></svg>
+</div>
+<div class="tb mob">
+  <svg class="full" viewBox="0 0 390 540" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,0 58,0 24,540 0,540" style="fill:rgb(255,105,50)"></polygon></svg>
+  <svg class="full" viewBox="0 0 390 540" preserveAspectRatio="none" aria-hidden="true"><polygon points="72,64 390,0 390,476 38,540" style="fill:#FEFBF4"></polygon></svg>
+</div>
+<script>
+// Reveal: cream shape slides in from the right, wedge fades, once when in view.
+(function () {
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var shapes = document.querySelectorAll('.shape, .mob svg:last-child'), wedges = document.querySelectorAll('.wedge, .mob svg:first-child');
+  if (reduced) return;
+  shapes.forEach(function (s) { s.style.opacity = '0'; }); wedges.forEach(function (w) { w.style.opacity = '0'; });
+  var play = function () {
+    wedges.forEach(function (w) { w.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 900, fill: 'forwards', easing: 'ease-out' }); });
+    shapes.forEach(function (s) { s.animate([{ opacity: 0, transform: 'translateX(60px)' }, { opacity: 1, transform: 'translateX(0)' }], { duration: 1200, delay: 150, fill: 'forwards', easing: 'cubic-bezier(.22,.61,.36,1)' }); });
+  };
+  var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { play(); io.disconnect(); } }); }, { threshold: 0.25 });
+  io.observe(document.querySelector('.tb.desk'));
+  io.observe(document.querySelector('.tb.mob'));
+})();
+</script>
+</body>
+</html>
