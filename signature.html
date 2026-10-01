@@ -33,7 +33,7 @@
   var paths = Array.prototype.slice.call(ink.querySelectorAll('path'));
   // order strokes left → right like handwriting
   var items = paths.map(function (p) { var b = p.getBBox(); return { p: p, x: b.x, w: b.width, y: b.y, h: b.height }; }).sort(function (a, b) { return a.x - b.x; });
-  var total = items.reduce(function (s, it) { return s + it.w; }, 0), DUR = 2400, PAD = 12;
+  var total = items.reduce(function (s, it) { return s + it.w; }, 0), DUR = 1300, PAD = 12;
   if (reduced) return;
   items.forEach(function (it, i) {
     var cp = document.createElementNS('http://www.w3.org/2000/svg', 'clipPath'); cp.id = 'c' + i;
@@ -43,15 +43,15 @@
   });
   function write(start) {
     var acc = 0;
-    items.forEach(function (it) { it.t0 = start + acc / total * DUR; it.d = Math.max(120, it.w / total * DUR * 1.15); acc += it.w; });
+    items.forEach(function (it) { it.t0 = start + acc / total * DUR; it.d = Math.max(140, it.w / total * DUR * 1.6); acc += it.w; });
     function frame() {
       var now = performance.now(), done = true;
-      items.forEach(function (it) { var k = Math.min(1, Math.max(0, (now - it.t0) / it.d)); var e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; it.r.setAttribute('width', (it.w + PAD * 2) * e); if (k < 1) done = false; });
+      items.forEach(function (it) { var k = Math.min(1, Math.max(0, (now - it.t0) / it.d)); var e = 1 - Math.pow(1 - k, 3); it.r.setAttribute('width', (it.w + PAD * 2) * e); if (k < 1) done = false; });
       if (!done) setTimeout(frame, 16); else items.forEach(function (it) { it.p.removeAttribute('clip-path'); });
     }
     frame();
   }
-  var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { io.disconnect(); write(performance.now() + 250); } }); }, { threshold: 0.6 });
+  var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { io.disconnect(); write(performance.now() + 120); } }); }, { threshold: 0.6 });
   io.observe(svg);
 })();
 </script>
