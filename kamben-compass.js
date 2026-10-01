@@ -5,7 +5,7 @@
  * Motion: plays once when 20% of the section is in view; honours prefers-reduced-motion. Arrow follows the cursor on pointer devices. */
 (function () {
   if (!window.customElements || customElements.get('kamben-compass')) return;
-  var DICT = {"en":{"s2a":"Analytics and","s2b":"performance","s2c":"marketing that","s2d":"you can navigate","h3a1":"See the whole","h3a2":"customer journey","h3b1":"Know which marketing","h3b2":"actually pays","h3c":"Own your numbers","p1":"Shop and web in one picture,\na complete view of your customers, so you know where they come from and where they stop.","p2":"Which channels bring customers, measured in kroner rather than clicks. Spend where it works, stop where it doesn't.","p3":"A measurement setup you understand, keep, and can explain to the next person who asks — with or without us.","bar1":"Web analytics","bar2":"Performance marketing","bar3":"Tracking","bar4":"Handover","bar5":"Customer data platform","bar6":"Google Ads","bar7":"Dashboard"},"no":{"s2a":"Analyse og","s2b":"performance","s2c":"marketing du","s2d":"kan navigere","h3a1":"Se hele","h3a2":"kundereisen","h3b1":"Vit hvilken markedsføring","h3b2":"som faktisk lønner seg","h3c":"Eie dine egne tall","p1":"Butikk og nett i ett bilde, helhetlig kundeforståelse, så du vet hvor kundene kommer fra og hvor de stopper.","p2":"Hvilke kanaler som gir kunder, målt i kroner, ikke klikk. Bruk pengene der det virker, stopp der det ikke gjør det.","p3":"Et måleoppsett du forstår, beholder og kan forklare til neste person som spør — med eller uten oss.","bar1":"Webanalyse","bar2":"Performance marketing","bar3":"Sporing","bar4":"Overlevering","bar5":"Kundedataplattform","bar6":"Google Ads","bar7":"Dashbord"}};
+  var DICT = {"en":{"s2a":"Analytics and","s2b":"performance","s2c":"marketing that","s2d":"you can navigate","h3a1":"Know what marketing","h3a2":"contributes to","h3b1":"Own your","h3b2":"numbers","p1":"Discover what channel delivers most value, measured in cash. Kamben helps you spend more where it works, and less where it does not.","p2":"Get a measurements setup you understand, use and keep beyond Kamben Signal. We structure everything so you keep your own accounts and data.","p3":"Store and e-commerce in one picture. Get a 360 view of your new, existing and potential customer journeys. Know where they come from, what they do and where they stop.","bar1":"Web analytics","bar2":"Performance marketing","bar3":"Tracking","bar4":"Handover","bar5":"Customer data platform","bar6":"Google Ads","bar7":"Dashboard","h3c1":"See the whole","h3c2":"customer journey"},"no":{"s2a":"Analyse og","s2b":"performance","s2c":"marketing du","s2d":"kan navigere","h3a1":"Vit hva markedsføringen","h3a2":"faktisk bidrar med","h3b1":"Eie dine egne","h3b2":"tall","p1":"Finn ut hvilken kanal som gir mest verdi, målt i kroner. Kamben hjelper deg å bruke mer der det virker, og mindre der det ikke gjør det.","p2":"Få et måleoppsett du forstår, bruker og beholder etter Kamben Signal. Vi strukturerer alt slik at du eier dine egne kontoer og data.","p3":"Butikk og nettbutikk i ett bilde. Få full oversikt over nye, eksisterende og potensielle kunders reise. Vit hvor de kommer fra, hva de gjør og hvor de stopper.","bar1":"Webanalyse","bar2":"Performance marketing","bar3":"Sporing","bar4":"Overlevering","bar5":"Kundedataplattform","bar6":"Google Ads","bar7":"Dashbord","h3c1":"Se hele","h3c2":"kundereisen"}};
   var TICKS = "M272.3 7.0L270.9 14.9M291.8 11.3L287.6 26.8M310.8 17.3L308.1 24.8M329.3 25.0L325.9 32.2M347.0 34.2L339.0 48.0M363.8 44.9L359.3 51.5M379.7 57.1L374.6 63.2M394.4 70.6L383.1 81.9M407.9 85.3L401.8 90.4M420.1 101.2L413.5 105.7M430.8 118.0L417.0 126.0M440.0 135.7L432.8 139.1M447.7 154.2L440.2 156.9M453.7 173.2L438.2 177.4M458.0 192.7L450.1 194.1M458.0 272.3L450.1 270.9M453.7 291.8L438.2 287.6M447.7 310.8L440.2 308.1M440.0 329.3L432.8 325.9M430.8 347.0L417.0 339.0M420.1 363.8L413.5 359.3M407.9 379.7L401.8 374.6M394.4 394.4L383.1 383.1M379.7 407.9L374.6 401.8M363.8 420.1L359.3 413.5M347.0 430.8L339.0 417.0M329.3 440.0L325.9 432.8M310.8 447.7L308.1 440.2M291.8 453.7L287.6 438.2M272.3 458.0L270.9 450.1M192.7 458.0L194.1 450.1M173.2 453.7L177.4 438.2M154.2 447.7L156.9 440.2M135.7 440.0L139.1 432.8M118.0 430.8L126.0 417.0M101.2 420.1L105.7 413.5M85.3 407.9L90.4 401.8M70.6 394.4L81.9 383.1M57.1 379.7L63.2 374.6M44.9 363.8L51.5 359.3M34.2 347.0L48.0 339.0M25.0 329.3L32.2 325.9M17.3 310.8L24.8 308.1M11.3 291.8L26.8 287.6M7.0 272.3L14.9 270.9M7.0 192.7L14.9 194.1M11.3 173.2L26.8 177.4M17.3 154.2L24.8 156.9M25.0 135.7L32.2 139.1M34.2 118.0L48.0 126.0M44.9 101.2L51.5 105.7M57.1 85.3L63.2 90.4M70.6 70.6L81.9 81.9M85.3 57.1L90.4 63.2M101.2 44.9L105.7 51.5M118.0 34.2L126.0 48.0M135.7 25.0L139.1 32.2M154.2 17.3L156.9 24.8M173.2 11.3L177.4 26.8M192.7 7.0L194.1 14.9";
   var ARROW = {"tip":-38.2,"vb":"0 0 45.18 37.65","tf":"translate(-29.49 0.00)","d":"M67.66,14.77l7.01-13.73-.22-1.04-25.42,5.66-19.54,3.21.23,1.11,14.57,12.35,9.51,15.32,13.86-22.88Z"};
   var ROWS = [["bar1","bar2","bar3","bar4"],["bar5","bar6","bar7"]];
@@ -25,10 +25,10 @@
     '.kc-title{position:absolute;margin:0;font:500 35px/40px ' + F + ';color:#fff;white-space:nowrap}',
     '.kc-grid{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}',
     '.kc-col{position:absolute}',
-    '.kc-h3{margin:0;min-height:118px;font:400 24px/22px ' + F + ';letter-spacing:-1.6px;color:#fff;white-space:nowrap}',
+    '.kc-h3{margin:0;min-height:118px;font:400 24px/24px ' + F + ';letter-spacing:-1.6px;color:#fff;text-wrap:balance}',
     '.kc-h3.kc-one{padding-top:11px}',
     '.kc-h3 strong{font-weight:700}',
-    '.kc-p{margin:0;max-width:208px;font:400 14px/21px ' + D + ';color:#fff;text-wrap:pretty}',
+    '.kc-p{margin:0;max-width:262px;font:400 14px/21px ' + D + ';color:#fff;text-wrap:pretty}',
     '.kc-bars{position:absolute;height:54px;display:flex;overflow:hidden}',
     '.kc-bar{flex:none;height:54px;display:flex;align-items:center;padding-left:35px;background:' + CREAM + ';font:400 15px/18px ' + F + ';letter-spacing:0.8px;text-transform:uppercase;color:#1B1B1B;white-space:nowrap}',
     '.kc-bar+.kc-bar{border-left:1px solid #000}',
@@ -113,12 +113,12 @@
       n.lines = ['l1', 'l1b', 'l2', 'v1', 'v2'].map(function (k) { var ln = svg('line', { stroke: LINE, 'stroke-width': 1 }); n[k] = ln; n.grid.appendChild(ln); return ln; });
       root.appendChild(n.grid);
       var cols = el('div', 'kc-cols');
-      var titles = [esc(t.h3a1) + '<br><strong>' + esc(t.h3a2) + '</strong>', esc(t.h3b1) + '<br><strong>' + esc(t.h3b2) + '</strong>', '<strong>' + esc(t.h3c) + '</strong>'];
+      var titles = [esc(t.h3a1) + '<br><strong>' + esc(t.h3a2) + '</strong>', esc(t.h3b1) + '<br><strong>' + esc(t.h3b2) + '</strong>', esc(t.h3c1) + '<br><strong>' + esc(t.h3c2) + '</strong>'];
       var paras = [t.p1, t.p2, t.p3];
       n.cols = []; n.h3s = []; n.paras = []; n.hrs = [];
       for (var i = 0; i < 3; i++) {
         var hr = el('div', 'kc-hr'); n.hrs.push(hr); cols.appendChild(hr);
-        var c = el('div', 'kc-col'), h = el('h3', 'kc-h3' + (i === 2 ? ' kc-one' : ''), titles[i]), p = el('p', 'kc-p', esc(paras[i]));
+        var c = el('div', 'kc-col'), h = el('h3', 'kc-h3', titles[i]), p = el('p', 'kc-p', esc(paras[i]));
         c.appendChild(h); c.appendChild(p); cols.appendChild(c); n.cols.push(c); n.h3s.push(h); n.paras.push(p);
       }
       root.appendChild(cols);
@@ -151,7 +151,8 @@
       for (i = 0; i < 3; i++) {
         var avail = Math.max(120, widths[i] - inset[i] - 24), f = Math.max(0.8, Math.min(1, avail / 215));
         n.cols[i].style.left = (lefts[i] + inset[i]) + 'px'; n.cols[i].style.top = '203px'; n.cols[i].style.width = avail + 'px';
-        n.h3s[i].style.fontSize = (24 * f) + 'px'; n.h3s[i].style.lineHeight = (22 * f) + 'px'; n.h3s[i].style.letterSpacing = (-1.6 * f) + 'px';
+        n.h3s[i].style.fontSize = (24 * f) + 'px'; n.h3s[i].style.lineHeight = (24 * f) + 'px'; n.h3s[i].style.letterSpacing = (-1.6 * f) + 'px';
+        var guard = 0; while (n.h3s[i].offsetHeight > 3 * parseFloat(n.h3s[i].style.lineHeight) + 1 && guard++ < 6) { f *= 0.94; n.h3s[i].style.fontSize = (24 * f) + 'px'; n.h3s[i].style.lineHeight = (24 * f) + 'px'; n.h3s[i].style.letterSpacing = (-1.6 * f) + 'px'; }
       }
       for (i = 0; i < 3; i++) { var b = 321 + n.paras[i].offsetHeight; if (b > maxB) maxB = b; }
       var r1 = Math.max(451, maxB + 25), r2 = r1 + 82, yB = r2 + 54, c3 = W - x2, bx = L + 11;
@@ -160,7 +161,7 @@
       for (i = 0; i < 4; i++) n.row1[i].style.width = w1[i] + 'px';
       for (i = 0; i < 3; i++) n.row2[i].style.width = w2[i] + 'px';
       var ry2 = 170.5 - cy, rr = ring / 2 + 10, dxr = Math.abs(ry2) < rr ? Math.sqrt(rr * rr - ry2 * ry2) : 0;
-      if (dxr) { setLine(n.l1, 0, 170.5, Math.max(0, cx - dxr), 170.5); setLine(n.l1b, Math.min(W, cx + dxr), 170.5, W, 170.5); } else { setLine(n.l1, 0, 170.5, W, 170.5); setLine(n.l1b, W, 170.5, W, 170.5); } setLine(n.l2, L, 284.5, W, 284.5); setLine(n.v1, x1, 170, x1, yB); setLine(n.v2, x2, 170, x2, yB);
+      if (dxr) { setLine(n.l1, 0, 170.5, 0, 170.5); setLine(n.l1b, Math.min(W, cx + dxr), 170.5, W, 170.5); } else { setLine(n.l1, 0, 170.5, W, 170.5); setLine(n.l1b, W, 170.5, W, 170.5); } setLine(n.l2, L, 284.5, W, 284.5); setLine(n.v1, x1, 170, x1, yB); setLine(n.v2, x2, 170, x2, yB);
       n.grid.setAttribute('viewBox', '0 0 ' + W + ' ' + yB); n.grid.style.width = W + 'px'; n.grid.style.height = yB + 'px';
       var H = Math.max(746, yB + 159);
       n.root.style.height = H + 'px'; this.style.height = H + 'px';
