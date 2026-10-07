@@ -5,29 +5,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kamben Signal — Testimonial background</title>
 <style>
-html,body{margin:0;padding:0;background:#CEDDD2;overflow:hidden}
-.tb{position:relative;width:100%;overflow:hidden;background:#CEDDD2}
-.tb svg{position:absolute;display:block}
-.desk{display:block} .mob{display:none}
-@media (max-width:759px){.desk{display:none} .mob{display:block}}
-/* desktop: 1440×735 composition, scaled to the frame width */
-.tb.desk{aspect-ratio:1440/735}
-.wedge{left:0;top:0;width:100%;height:100%}
-.shape{left:14.653%;top:-31.156%;width:110.07%;height:169.93%}
-/* mobile: 390×540 composition */
-.tb.mob{aspect-ratio:390/540}
-.full{left:0;top:0;width:100%;height:100%}
+html,body{margin:0;padding:0;width:100%;height:100%;background:#CEDDD2;overflow:hidden}
+svg{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
+.mob{display:none}
+@media (max-width:759px){.desk{display:none}.mob{display:block}}
 </style>
 </head>
 <body>
-<div class="tb desk">
-  <svg class="wedge" viewBox="0 0 1440 735" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,0 256,0 119,735 0,735" style="fill:rgb(255,105,50)"></polygon></svg>
-  <svg class="shape" viewBox="0 0 1585 1249" preserveAspectRatio="none" aria-hidden="true"><path d="M 0 477.595 L 302.004 304.166 L 662.063 14.231 L 679.74 0 L 709.778 17.991 L 929.06 285.77 L 1079.427 553.896 L 1316.154 919.208 L 1459.358 1062.613 L 1585 1249 L 586.215 1249 L 239.674 832.956 L 134.25 654.321 L 0 477.595 Z" style="fill:#FEFBF4"></path></svg>
-</div>
-<div class="tb mob">
-  <svg class="full" viewBox="0 0 390 540" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,0 58,0 24,540 0,540" style="fill:rgb(255,105,50)"></polygon></svg>
-  <svg class="full" viewBox="0 0 390 540" preserveAspectRatio="none" aria-hidden="true"><polygon points="72,64 390,0 390,476 38,540" style="fill:#FEFBF4"></polygon></svg>
-</div>
-
+<!-- Desktop composition, 1440×735 design space. preserveAspectRatio "slice" = cover: scales to fill the frame at ANY width/height,
+     cropping top/bottom instead of distorting, so the orange wedge always meets the left edge. ?fit=stretch distorts instead of cropping. -->
+<svg class="desk" viewBox="0 0 1440 735" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <polygon class="wedge" points="0,0 256,0 119,735 0,735" fill="#FF6932"></polygon>
+  <path class="shape" transform="translate(211 -229)" d="M 0 477.595 L 302.004 304.166 L 662.063 14.231 L 679.74 0 L 709.778 17.991 L 929.06 285.77 L 1079.427 553.896 L 1316.154 919.208 L 1459.358 1062.613 L 1585 1249 L 586.215 1249 L 239.674 832.956 L 134.25 654.321 L 0 477.595 Z" fill="#FEFBF4"></path>
+</svg>
+<svg class="mob" viewBox="0 0 390 540" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <polygon class="wedge" points="0,0 58,0 24,540 0,540" fill="#FF6932"></polygon>
+  <polygon class="shape" points="72,64 390,0 390,476 38,540" fill="#FEFBF4"></polygon>
+</svg>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  if (q.get('bg')) document.documentElement.style.background = document.body.style.background = '#' + q.get('bg').replace('#', '');
+  if (q.get('fit') === 'stretch') document.querySelectorAll('svg').forEach(function (s) { s.setAttribute('preserveAspectRatio', 'none'); });
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var E = 'cubic-bezier(.22,.61,.36,1)', shapes = document.querySelectorAll('.shape'), wedges = document.querySelectorAll('.wedge');
+  shapes.forEach(function (s) { s.style.opacity = '0'; s.style.transform = 'translateY(24px)'; });
+  wedges.forEach(function (w) { w.style.clipPath = 'inset(0 0 100% 0)'; });
+  function play() {
+    shapes.forEach(function (s) { s.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 1100, fill: 'forwards', easing: E }); });
+    wedges.forEach(function (w) { w.animate([{ clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)' }], { duration: 1200, delay: 150, fill: 'forwards', easing: E }); });
+  }
+  var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { io.disconnect(); play(); } }); }, { threshold: 0.25 });
+  io.observe(document.body);
+})();
+</script>
 </body>
 </html>
