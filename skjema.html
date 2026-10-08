@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kamben Kompass — free site analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root{--sage:#CADFD1;--ink:#1B1B1B;--grey:#4D4A45;--muted:#7B776F;--cream:#FEFBF4;--orange:#FF6932}
+  *{box-sizing:border-box}
+  html,body{margin:0;background:transparent}
+  body{font-family:'DM Sans','Helvetica Neue',Arial,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+  .card{background:var(--sage);padding:32px 32px 36px;max-width:520px;margin:0 auto}
+  h1{margin:0;font:500 28px/34px 'Space Grotesk','Helvetica Neue',Arial,sans-serif;letter-spacing:-0.5px;color:var(--ink)}
+  .sub{margin:8px 0 0;font:400 15px/22px 'DM Sans','Helvetica Neue',Arial,sans-serif;color:var(--grey)}
+  form{margin-top:26px}
+  label{display:block;margin:0 0 8px;font:500 12px/16px 'Space Grotesk','Helvetica Neue',Arial,sans-serif;letter-spacing:1px;text-transform:uppercase;color:var(--ink)}
+  .field{margin-bottom:22px}
+  .ctl{display:flex;width:100%;height:48px;border:1px solid var(--ink);background:#fff}
+  .ctl input{flex:1;min-width:0;height:100%;border:0;outline:0;padding:0 15px;background:transparent;font:400 16px/48px 'DM Sans','Helvetica Neue',Arial,sans-serif;color:var(--ink)}
+  .ctl input::placeholder{color:#A0A0A0}
+  .ctl:focus-within{box-shadow:inset 0 0 0 1px var(--ink)}
+  .prefix{display:flex;align-items:center;padding:0 14px;border-right:1px solid var(--ink);background:var(--cream);font:400 14px/1 'DM Mono',ui-monospace,Menlo,monospace;color:var(--ink);white-space:nowrap}
+  .consent{display:grid;grid-template-columns:18px 1fr;gap:12px;align-items:start;margin:2px 0 30px;font:400 14px/19px 'DM Sans','Helvetica Neue',Arial,sans-serif;letter-spacing:0;text-transform:none;color:var(--ink)}
+  .consent input{appearance:none;width:18px;height:18px;margin:1px 0 0;border:1px solid var(--ink);background:#fff;cursor:pointer;display:grid;place-content:center}
+  .consent input:checked::after{content:"";width:10px;height:10px;background:var(--ink)}
+  .consent a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+  .consent a:hover{color:var(--orange)}
+  button{display:flex;align-items:center;justify-content:space-between;width:100%;height:54px;padding:0 16px 0 20px;border:0;background:#000;color:#fff;cursor:pointer;font:500 15px/1 'Space Grotesk','Helvetica Neue',Arial,sans-serif;letter-spacing:1.2px;text-transform:uppercase;transition:background 180ms,color 180ms}
+  button:hover{background:var(--orange);color:#000}
+  button:disabled{cursor:default;opacity:.7}
+  button svg{display:block;width:58px;height:31px;overflow:visible}
+  .note{margin:14px 0 0;font:400 13px/18px 'DM Sans','Helvetica Neue',Arial,sans-serif;color:var(--muted)}
+  .msg{margin:14px 0 0;font:400 14px/20px 'DM Sans','Helvetica Neue',Arial,sans-serif;color:var(--ink);display:none}
+  .msg.err{color:#A3321B}
+  .msg.show{display:block}
+  @media (max-width:420px){.card{padding:24px 20px 28px}h1{font-size:24px;line-height:30px}}
+</style>
+</head>
+<body>
+<main class="card">
+  <h1 data-i18n="title">Get your free site analysis</h1>
+  <p class="sub" data-i18n="sub">Tell us where to send it. The report arrives by email.</p>
+  <form id="f" novalidate>
+    <div class="field"><label for="navn" data-i18n="name">Name</label><div class="ctl"><input id="navn" name="navn" type="text" autocomplete="name" required data-i18n-ph="namePh" placeholder="Ola Nordmann"></div></div>
+    <div class="field"><label for="epost" data-i18n="email">Email</label><div class="ctl"><input id="epost" name="epost" type="email" autocomplete="email" required data-i18n-ph="emailPh" placeholder="ola@company.no"></div></div>
+    <div class="field"><label for="url" data-i18n="site">Your website</label><div class="ctl"><span class="prefix">https://</span><input id="url" name="url" type="text" inputmode="url" autocomplete="url" required data-i18n-ph="sitePh" placeholder="company.no"></div></div>
+    <label class="consent"><input id="samtykke" name="samtykke" type="checkbox" required><span data-i18n-html="consent">I agree that Kamben Signal may contact me by email about the analysis. <a href="https://www.kambensignal.no/privacy" target="_blank" rel="noopener">Privacy policy</a></span></label>
+    <!-- Cloudflare Turnstile goes here on Tobias's server: <div class="cf-turnstile" data-sitekey="…"></div> -->
+    <button type="submit" id="send"><span data-i18n="send">Send me the analysis</span><svg viewBox="0 0 104 55" aria-hidden="true"><polygon points="0,0 62,0 104,0 102.8,52.2 38.3,55 0,55 0,28.9" fill="none" stroke="currentColor" stroke-width="1.3" vector-effect="non-scaling-stroke"></polygon><g transform="translate(37.75 11)"><polyline points="0,17 28,17" fill="none" stroke="currentColor" stroke-width="1.2" vector-effect="non-scaling-stroke"></polyline><polyline points="14.5,0 28.5,17 14.5,33" fill="none" stroke="currentColor" stroke-width="1.2" vector-effect="non-scaling-stroke"></polyline></g></svg></button>
+    <p class="note" data-i18n="note">Usually arrives within 2–4 minutes.</p>
+    <p class="msg" id="msg" role="status" aria-live="polite"></p>
+  </form>
+</main>
+<script>
+(function () {
+  // ===== Tobias: set ENDPOINT to the real API and the form posts for real. Leave empty = design preview (no submission). =====
+  var ENDPOINT = ''; // e.g. 'https://kompass-259652541148.europe-north1.run.app/api/innsending'
+  var T = {
+    en: { title: 'Get your free site analysis', sub: 'Tell us where to send it. The report arrives by email.', name: 'Name', namePh: 'Ola Nordmann', email: 'Email', emailPh: 'ola@company.no', site: 'Your website', sitePh: 'company.no', consent: 'I agree that Kamben Signal may contact me by email about the analysis. <a href="https://www.kambensignal.no/privacy" target="_blank" rel="noopener">Privacy policy</a>', send: 'Send me the analysis', note: 'Usually arrives within 2–4 minutes.', ok: 'Thanks! Your analysis is on its way. Check your inbox (and spam folder) in a few minutes.', missing: 'Please fill in all fields and tick the consent box.', preview: 'Preview only: the form is not connected yet.', fail: 'Something went wrong. Please try again in a moment.' },
+    no: { title: 'Få en gratis analyse av nettsiden', sub: 'Fortell oss hvor vi skal sende den. Rapporten kommer på e-post.', name: 'Navn', namePh: 'Ola Nordmann', email: 'E-post', emailPh: 'ola@firma.no', site: 'Nettsiden din', sitePh: 'firma.no', consent: 'Jeg godtar at Kamben Signal kan kontakte meg på e-post om analysen. <a href="https://www.kambensignal.no/no/personvern" target="_blank" rel="noopener">Personvernerklæring</a>', send: 'Send meg analysen', note: 'Kommer vanligvis innen 2–4 minutter.', ok: 'Takk! Analysen er på vei. Sjekk innboksen (og søppelposten) om noen minutter.', missing: 'Fyll ut alle feltene og kryss av for samtykke.', preview: 'Kun forhåndsvisning: skjemaet er ikke koblet til ennå.', fail: 'Noe gikk galt. Prøv igjen om et øyeblikk.' }
+  };
+  var q = new URLSearchParams(location.search), lang = (q.get('lang') || 'en').slice(0, 2), t = T[lang] || T.en;
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(function (e) { e.textContent = t[e.getAttribute('data-i18n')]; });
+  document.querySelectorAll('[data-i18n-html]').forEach(function (e) { e.innerHTML = t[e.getAttribute('data-i18n-html')]; });
+  document.querySelectorAll('[data-i18n-ph]').forEach(function (e) { e.placeholder = t[e.getAttribute('data-i18n-ph')]; });
+  var f = document.getElementById('f'), msg = document.getElementById('msg'), btn = document.getElementById('send');
+  function say(text, err) { msg.textContent = text; msg.className = 'msg show' + (err ? ' err' : ''); }
+  // tell the parent page our height so the Wix embed can size itself (optional)
+  function postH() { try { parent.postMessage({ kompassHeight: document.documentElement.scrollHeight }, '*'); } catch (e) {} }
+  postH(); window.addEventListener('resize', postH);
+  f.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var navn = f.navn.value.trim(), epost = f.epost.value.trim(), url = f.url.value.trim().replace(/^https?:\/\//i, ''), ok = f.samtykke.checked;
+    if (!navn || !epost || !url || !ok) { say(t.missing, true); return; }
+    if (!ENDPOINT) { say(t.preview, true); return; }
+    var token = (window.turnstile && f.querySelector('[name="cf-turnstile-response"]') || {}).value || '';
+    btn.disabled = true;
+    fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ navn: navn, epost: epost, url: url, samtykke: true, turnstile_token: token }) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) { if (res.ok) { say(t.ok); f.reset(); } else { say(res.j && res.j.melding || t.fail, true); } })
+      .catch(function () { say(t.fail, true); })
+      .then(function () { btn.disabled = false; postH(); });
+  });
+})();
+</script>
+</body>
+</html>
