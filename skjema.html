@@ -29,10 +29,9 @@
   .consent a{color:inherit;text-decoration:underline;text-underline-offset:3px}
   .consent a:hover{color:var(--orange)}
   button{display:flex;align-items:center;justify-content:space-between;width:100%;height:54px;padding:0 16px 0 20px;border:0;background:#000;color:#fff;cursor:pointer;font:500 15px/1 'Space Grotesk','Helvetica Neue',Arial,sans-serif;letter-spacing:1.2px;text-transform:uppercase;transition:background 180ms,color 180ms}
-  button:hover .frame{fill:var(--orange)}
-  button:hover .arr{stroke:#000}
+  button:hover{background:var(--orange);color:#000}
   button:disabled{cursor:default;opacity:.7}
-  button svg{display:block;width:58px;height:31px;overflow:visible}
+  button svg{display:block;width:30px;height:31px;overflow:visible}
   .note{margin:14px 0 0;font:400 13px/18px 'DM Sans','Helvetica Neue',Arial,sans-serif;color:var(--muted)}
   .msg{margin:14px 0 0;font:400 14px/20px 'DM Sans','Helvetica Neue',Arial,sans-serif;color:var(--ink);display:none}
   .msg.err{color:#A3321B}
@@ -50,7 +49,7 @@
     <div class="field"><label for="url" data-i18n="site">Your website</label><div class="ctl"><span class="prefix">https://</span><input id="url" name="url" type="text" inputmode="url" autocomplete="url" required data-i18n-ph="sitePh" placeholder="company.no"></div></div>
     <label class="consent"><input id="samtykke" name="samtykke" type="checkbox" required><span data-i18n-html="consent">I agree that Kamben Signal may contact me by email about the analysis. <a href="https://www.kambensignal.no/privacy" target="_blank" rel="noopener">Privacy policy</a></span></label>
     <!-- Cloudflare Turnstile goes here on Tobias's server: <div class="cf-turnstile" data-sitekey="…"></div> -->
-    <button type="submit" id="send"><span data-i18n="send">Send me the analysis</span><svg viewBox="0 0 104 55" aria-hidden="true"><polygon class="frame" points="0,0 62,0 104,0 102.8,52.2 38.3,55 0,55 0,28.9" fill="none" stroke="currentColor" stroke-width="1.3" vector-effect="non-scaling-stroke" style="transition:fill 180ms"></polygon><g transform="translate(37.75 11)"><polyline class="arr" points="0,17 28,17" fill="none" stroke="currentColor" stroke-width="1.2" vector-effect="non-scaling-stroke" style="transition:stroke 180ms"></polyline><polyline class="arr" points="14.5,0 28.5,17 14.5,33" fill="none" stroke="currentColor" stroke-width="1.2" vector-effect="non-scaling-stroke" style="transition:stroke 180ms"></polyline></g></svg></button>
+    <button type="submit" id="send"><span data-i18n="send">Send me the analysis</span><svg viewBox="0 0 30 55" aria-hidden="true"><g transform="translate(0.75 11)"><polyline class="arr" points="0,17 28,17" fill="none" stroke="currentColor" stroke-width="1.2" vector-effect="non-scaling-stroke"></polyline><polyline class="arr" points="14.5,0 28.5,17 14.5,33" fill="none" stroke="currentColor" stroke-width="1.2" vector-effect="non-scaling-stroke"></polyline></g></svg></button>
     <p class="note" data-i18n="note">Usually arrives within 2–4 minutes.</p>
     <p class="msg" id="msg" role="status" aria-live="polite"></p>
   </form>
