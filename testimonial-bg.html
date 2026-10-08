@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kamben Signal — Testimonial background</title>
+<title>Kamben testimonial bg v3</title>
 <style>
 html,body{margin:0;padding:0;width:100%;height:100%;background:#CEDDD2;overflow:hidden}
 svg{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
@@ -27,6 +27,7 @@ svg{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
   var q = new URLSearchParams(location.search);
   if (q.get('bg')) document.documentElement.style.background = document.body.style.background = '#' + q.get('bg').replace('#', '');
   if (q.get('fit') === 'stretch') document.querySelectorAll('svg').forEach(function (s) { s.setAttribute('preserveAspectRatio', 'none'); });
+  if (q.get('debug')) { var b = document.createElement('p'); b.textContent = 'testimonial-bg v3'; b.style.cssText = 'position:absolute;right:12px;bottom:8px;margin:0;font:12px/14px monospace;color:#FF6932;z-index:9'; document.body.appendChild(b); }
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var E = 'cubic-bezier(.22,.61,.36,1)', shapes = document.querySelectorAll('.shape'), wedges = document.querySelectorAll('.wedge');
   shapes.forEach(function (s) { s.style.opacity = '0'; s.style.transform = 'translateY(24px)'; });
