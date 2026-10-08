@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kamben — arrow button</title>
+<style>
+  html,body{margin:0;padding:0;background:transparent;overflow:hidden}
+  a{position:absolute;inset:0;display:block;color:#fff;cursor:pointer}
+  a svg{display:block;width:100%;height:100%;overflow:visible}
+  .frame{fill:transparent;stroke:currentColor;stroke-width:1.3;transition:fill 180ms}
+  .arr{fill:none;stroke:currentColor;stroke-width:1.2;transition:stroke 180ms}
+  a:hover .frame{fill:#FF6932}
+  a:hover .arr{stroke:#000}
+</style>
+</head>
+<body>
+<a id="btn" href="#" aria-label="View all">
+  <svg viewBox="0 0 104 55" preserveAspectRatio="none" aria-hidden="true"><polygon class="frame" points="0,0 62,0 104,0 102.8,52.2 38.3,55 0,55 0,28.9" vector-effect="non-scaling-stroke"></polygon></svg>
+  <svg viewBox="0 0 104 55" aria-hidden="true" style="position:absolute;inset:0"><g transform="translate(37.75 11)"><polyline class="arr" points="0,17 28,17" vector-effect="non-scaling-stroke"></polyline><polyline class="arr" points="14.5,0 28.5,17 14.5,33" vector-effect="non-scaling-stroke"></polyline></g></svg>
+</a>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search), a = document.getElementById('btn');
+  var href = q.get('href') || '', color = q.get('color'), fill = q.get('fill');
+  if (color) a.style.color = '#' + color.replace('#', '');
+  if (fill) document.querySelector('.frame').style.setProperty('--f', '#' + fill.replace('#', ''));
+  if (q.get('label')) a.setAttribute('aria-label', q.get('label'));
+  if (href) { a.href = href; a.target = '_top'; }
+  else a.addEventListener('click', function (e) { e.preventDefault(); });
+})();
+</script>
+</body>
+</html>
