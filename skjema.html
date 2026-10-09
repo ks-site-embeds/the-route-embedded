@@ -10,9 +10,10 @@
 <style>
   :root{--sage:#CADFD1;--ink:#000000;--grey:#000000;--muted:#000000;--cream:#FEFBF4;--orange:#FF6932}
   *{box-sizing:border-box}
-  html,body{margin:0;background:transparent}
+  html,body{margin:0;background:var(--sage);min-height:100%}
   body{font-family:'DM Sans','Helvetica Neue',Arial,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
-  .card{background:var(--sage);padding:32px 32px 36px;max-width:520px;margin:0 auto}
+  .card{background:var(--sage);padding:120px 70px 60px 108px;max-width:none;margin:0;min-height:100vh;box-sizing:border-box}
+  .inner{max-width:512px}
   h1{margin:0;font:500 28px/34px 'Space Grotesk','Helvetica Neue',Arial,sans-serif;letter-spacing:-0.5px;color:var(--ink)}
   .sub{margin:8px 0 0;font:400 15px/22px 'DM Sans','Helvetica Neue',Arial,sans-serif;color:var(--grey)}
   form{margin-top:26px}
@@ -36,11 +37,11 @@
   .msg{margin:14px 0 0;font:400 14px/20px 'DM Sans','Helvetica Neue',Arial,sans-serif;color:var(--ink);display:none}
   .msg.err{color:#A3321B}
   .msg.show{display:block}
-  @media (max-width:420px){.card{padding:24px 20px 28px}h1{font-size:24px;line-height:30px}}
+  @media (max-width:760px){.card{padding:48px 20px 48px;min-height:0}h1{font-size:24px;line-height:30px}}
 </style>
 </head>
 <body>
-<main class="card">
+<main class="card"><div class="inner">
   <h1 data-i18n="title">Get your free site analysis</h1>
   <p class="sub" data-i18n="sub">Tell us where to send it. The report arrives by email.</p>
   <form id="f" novalidate>
@@ -53,7 +54,7 @@
     <p class="note" data-i18n="note">Usually arrives within 2–4 minutes.</p>
     <p class="msg" id="msg" role="status" aria-live="polite"></p>
   </form>
-</main>
+</div></main>
 <script>
 (function () {
   // ===== Tobias: set ENDPOINT to the real API and the form posts for real. Leave empty = design preview (no submission). =====
