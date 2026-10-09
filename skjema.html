@@ -12,8 +12,8 @@
   *{box-sizing:border-box}
   html,body{margin:0;background:var(--sage);min-height:100%}
   body{font-family:'DM Sans','Helvetica Neue',Arial,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
-  .card{background:var(--sage);padding:120px 70px 60px 108px;max-width:none;margin:0;min-height:100vh;box-sizing:border-box}
-  .inner{max-width:512px}
+  .card{background:var(--sage);padding:48px 40px;max-width:none;margin:0;min-height:100vh;box-sizing:border-box;display:flex;align-items:center;justify-content:center}
+  .inner{width:100%;max-width:512px}
   h1{margin:0;font:500 28px/34px 'Space Grotesk','Helvetica Neue',Arial,sans-serif;letter-spacing:-0.5px;color:var(--ink)}
   .sub{margin:8px 0 0;font:400 15px/22px 'DM Sans','Helvetica Neue',Arial,sans-serif;color:var(--grey)}
   form{margin-top:26px}
@@ -37,7 +37,7 @@
   .msg{margin:14px 0 0;font:400 14px/20px 'DM Sans','Helvetica Neue',Arial,sans-serif;color:var(--ink);display:none}
   .msg.err{color:#A3321B}
   .msg.show{display:block}
-  @media (max-width:760px){.card{padding:48px 20px 48px;min-height:0}h1{font-size:24px;line-height:30px}}
+  @media (max-width:760px){.card{padding:48px 20px;min-height:0;display:block}h1{font-size:24px;line-height:30px}}
 </style>
 </head>
 <body>
